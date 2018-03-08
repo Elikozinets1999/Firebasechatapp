@@ -8,6 +8,7 @@
     <string name="register_title">Registration Screen</string>
     <string name="Register_btn">Register</string>
     <string name="MoveToLog">Already have an account? Login here!</string>
+    <string name="menu_signout">Sign-out</string>
 
     //Hints
     <string name="email_here">Enter E-mail</string>

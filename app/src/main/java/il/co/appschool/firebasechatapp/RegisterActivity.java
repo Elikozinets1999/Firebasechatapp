@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegisterActivity extends AppCompatActivity {
     private EditText etRegisterEmail, etRegisterPassword, etConfirmPassword;
     private Button btnRegister, btnGoToLogin;
+    private ProgressBar progressBar;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
         etRegisterEmail = findViewById(R.id.etRegisterEmail);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        progressBar = findViewById(R.id.RegisterProgress);
+        progressBar.setVisibility(View.INVISIBLE);
         btnRegister = findViewById(R.id.btn_Register);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,11 +65,13 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Enter a valid password!", Toast.LENGTH_LONG)
                     .show();
         else{
+            progressBar.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         finish();
+                        progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(RegisterActivity.this, ChatActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         etRegisterEmail.setText("");
@@ -75,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     else{
                         Toast.makeText(getApplicationContext(), task.getException().getMessage(),
                                 Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
             });

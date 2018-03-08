@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etLoginEmail, etLoginPassword;
     private Button btnLogin, btnGoToReg;
     FirebaseAuth mAuth;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         etLoginEmail = findViewById(R.id.etLoginEmail);
         etLoginPassword = findViewById(R.id.etLoginPassword);
+        progressBar = findViewById(R.id.LoginProgress);
+        progressBar.setVisibility(View.INVISIBLE);
         btnLogin = findViewById(R.id.btn_Login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,15 +51,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //@Override
-    /*protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
             finish();
             startActivity(new Intent(MainActivity.this, ChatActivity.class));
         }
 
-    }*/
+    }
 
     private void startLogin() {
         String email = etLoginEmail.getText().toString().trim();
@@ -71,11 +75,13 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         else{
+            progressBar.setVisibility(View.VISIBLE);
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         finish();
+                        progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(MainActivity.this, ChatActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         etLoginEmail.setText("");
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         Toast.makeText(getApplicationContext(), task.getException().getMessage(),
                                 Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
             });
