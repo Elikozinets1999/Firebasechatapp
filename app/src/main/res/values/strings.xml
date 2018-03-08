@@ -1,3 +1,16 @@
 <resources>
+
+    //Strings
     <string name="app_name">Firebase chat app</string>
+    <string name="login_title">Login Screen</string>
+    <string name="Login_btn">Login</string>
+    <string name="MovetoReg">Dont have an account? Sign in here!</string>
+    <string name="register_title">Registration Screen</string>
+    <string name="Register_btn">Register</string>
+    <string name="MoveToLog">Already have an account? Login here!</string>
+
+    //Hints
+    <string name="email_here">Enter E-mail</string>
+    <string name="password_here">Enter password</string>
+    <string name="Confirm_password">Confirm password</string>
 </resources>

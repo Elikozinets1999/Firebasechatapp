@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    tools:context="il.co.appschool.firebasechatapp.MainActivity"
+    tools:context="il.co.appschool.firebasechatapp.RegisterActivity"
     android:orientation="vertical"
     >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_title"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="#000"
         android:textStyle="italic"
+        android:gravity="center"
+        android:text="@string/register_title"
+        android:textColor="#000"
+        android:textSize="30sp"
         android:padding="10dp"
         />
 
@@ -35,7 +34,7 @@
         android:gravity="center"
         android:maxLength="30"
         android:maxLines="1"
-        android:id="@+id/etLoginEmail"
+        android:id="@+id/etRegisterEmail"
         />
 
     <EditText
@@ -53,7 +52,25 @@
         android:gravity="center"
         android:maxLength="20"
         android:maxLines="1"
-        android:id="@+id/etLoginPassword"
+        android:id="@+id/etRegisterPassword"
+        />
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:inputType="textPassword"
+        android:background="#000"
+        android:textColor="#fff"
+        android:textStyle="italic"
+        android:hint="@string/Confirm_password"
+        android:textColorHint="#fff"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:id="@+id/etConfirmPassword"
         />
 
     <Button
@@ -62,11 +79,11 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="#000"
-        android:text="@string/Login_btn"
+        android:text="@string/Register_btn"
         android:textColor="#fff"
         android:textSize="25sp"
         android:textStyle="italic"
-        android:id="@+id/btn_Login"
+        android:id="@+id/btn_Register"
         />
 
     <Button
@@ -76,10 +93,9 @@
         android:layout_marginTop="30dp"
         android:background="#000"
         android:textColor="#fff"
-        android:text="@string/MovetoReg"
-        android:id="@+id/btnMoveToReg"
+        android:text="@string/MoveToLog"
+        android:id="@+id/btnMoveToLog"
         android:textStyle="italic"
         />
-
 
 </LinearLayout>
