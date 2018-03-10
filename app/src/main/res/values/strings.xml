@@ -9,9 +9,21 @@
     <string name="Register_btn">Register</string>
     <string name="MoveToLog">Already have an account? Login here!</string>
     <string name="menu_signout">Sign-out</string>
+    <string name="Contacts_title">Contacts</string>
+    <string name="setuptitle">Set up your profile</string>
+    <string name="defaultpic">if the won\'t change the image, it will be your default profile picture</string>
+    <string name="btnSave">Save information</string>
+    <string name="profile_title">Profile</string>
+    <string name="btnEdit">Edit Profile</string>
 
     //Hints
     <string name="email_here">Enter E-mail</string>
     <string name="password_here">Enter password</string>
     <string name="Confirm_password">Confirm password</string>
+    <string name="display_name">Display name</string>
+    <string name="First_name">First name</string>
+    <string name="Last_name">Last name</string>
+
+    //digit sets
+    <string name="Display_name_set">QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm</string>
 </resources>
