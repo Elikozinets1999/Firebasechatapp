@@ -1,6 +1,8 @@
 package il.co.appschool.firebasechatapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +18,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextView tvName, tvDisplay;
     Button btnEdit;
     FirebaseAuth mAuth;
+    public SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +49,23 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_gotoContacts)
             startActivity(new Intent(ProfileActivity.this, ChatActivity.class));
+        else if (item.getItemId() == R.id.action_settings){
+            startActivity(new Intent(ProfileActivity.this, Settings.class));
+        }
         else if(item.getItemId() == R.id.menu_signout){
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(ProfileActivity.this, MainActivity.class));
         }
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sp=getApplicationContext().getSharedPreferences("settings",0);
+        String background = sp.getString("background", null);
+        if (background != null) {
+            getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
+        }
     }
 }
