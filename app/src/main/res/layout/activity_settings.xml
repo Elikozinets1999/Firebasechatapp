@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="il.co.appschool.firebasechatapp.Settings"
+    android:orientation="vertical"
+    android:id="@+id/llSettings">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="25sp"
+        android:textStyle="italic"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvBackgroundSelection"
+        android:paddingTop="10dp"
+        android:paddingLeft="5dp"
+        android:text="Select background color"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvBackgroundSelection"
+        android:checkedButton="@+id/rbtnColorWhite"
+        android:id="@+id/radioGroupBackgrounds">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtnColorWhite"
+            android:text="White"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtnColorYellow"
+            android:text="Yellow"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtnColorBlue"
+            android:text="Blue"/>
+    </RadioGroup>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Background"
+        android:layout_below="@+id/radioGroupBackgrounds"
+        android:background="#5213fad7"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/btnSetBackground"
+        android:layout_marginTop="10dp"
+        />
+</LinearLayout>
