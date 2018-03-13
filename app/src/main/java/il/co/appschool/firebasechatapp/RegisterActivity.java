@@ -73,7 +73,6 @@ public class RegisterActivity extends AppCompatActivity {
                         finish();
                         progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(RegisterActivity.this, SetUPActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         etRegisterEmail.setText("");
                         etRegisterPassword.setText("");
                         startActivity(intent);

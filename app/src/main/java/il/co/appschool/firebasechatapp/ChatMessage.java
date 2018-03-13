@@ -1,6 +1,8 @@
 package il.co.appschool.firebasechatapp;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Eli on 3/8/2018.
@@ -9,14 +11,16 @@ import java.util.Date;
 public class ChatMessage {
     private String messageText;
     private String messageUser;
-    private long messageTime;
+    private Date messageTime;
 
     public ChatMessage(String messageText, String messageUser) {
         this.messageText = messageText;
         this.messageUser = messageUser;
 
         // Initialize to current time
-        messageTime = new Date().getTime();
+        messageTime = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E hh:mm a",Locale.getDefault());
+        simpleDateFormat.format(messageTime);
     }
 
     public ChatMessage(){
@@ -39,11 +43,7 @@ public class ChatMessage {
         this.messageUser = messageUser;
     }
 
-    public long getMessageTime() {
+    public Date getMessageTime() {
         return messageTime;
-    }
-
-    public void setMessageTime(long messageTime) {
-        this.messageTime = messageTime;
     }
 }
