@@ -31,11 +31,13 @@ public class ChatActivity extends AppCompatActivity {
     ListView chatList;
     ArrayList<ChatMessage> chatlist;
     ChatAdapter chatAdapter;
+    String fname, lname;
     public SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        mAuth = FirebaseAuth.getInstance();
         chatList = findViewById(R.id.list_of_messages);
         FloatingActionButton fab = findViewById(R.id.fab);
         chatlist = new ArrayList<ChatMessage>();
@@ -56,8 +58,11 @@ public class ChatActivity extends AppCompatActivity {
                     mChannel.enableVibration(false);
                     mNotificationManager.createNotificationChannel(mChannel);
                 }
-                myNotificationManager.getInstance(ChatActivity.this).displayNotification(FirebaseAuth.getInstance().getCurrentUser().getEmail(),input.getText().toString());
-                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                String[] names = mAuth.getCurrentUser().getDisplayName().split(" ");
+                fname = names[1];
+                lname = names[2];
+                myNotificationManager.getInstance(ChatActivity.this).displayNotification(fname+" "+lname + " ("+FirebaseAuth.getInstance().getCurrentUser().getEmail()+")",input.getText().toString());
+                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname + " ("+FirebaseAuth.getInstance().getCurrentUser().getEmail()+")");
                 chatlist.add(chatMessage);
                 input.setText("");
                 chatAdapter.notifyDataSetChanged();
@@ -76,6 +81,11 @@ public class ChatActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.action_sign_out) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(ChatActivity.this, MainActivity.class));
+        }
+        if(item.getItemId() == R.id.action_gotoProfile ){
+            Intent intent_toprofile = new Intent(ChatActivity.this, ProfileActivity.class);
+            startActivity(intent_toprofile);
+
         }
         return true;
     }

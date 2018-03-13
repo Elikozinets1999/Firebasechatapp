@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
             finish();
-            startActivity(new Intent(MainActivity.this, ChatActivity.class));
+            Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+            startActivity(intent);
         }
 
     }

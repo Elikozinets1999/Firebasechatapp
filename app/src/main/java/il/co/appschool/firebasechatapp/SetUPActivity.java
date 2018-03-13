@@ -33,6 +33,9 @@ public class SetUPActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveUserInformation();
+                etDisplayName.setText("");
+                etFirstName.setText("");
+                etLastName.setText("");
             }
         });
     }
@@ -60,7 +63,7 @@ public class SetUPActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null){
             UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(displayname+" ("+firstname+" "+lastname+")")
+                    .setDisplayName(displayname+" "+firstname+" "+lastname)
                     .build();
             Log.d("TAG", profileChangeRequest.getDisplayName());
             user.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -69,9 +72,6 @@ public class SetUPActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         Toast.makeText(getApplicationContext(), "Profile updated", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(SetUPActivity.this, ProfileActivity.class);
-                        intent.putExtra("Display name",displayname);
-                        intent.putExtra("First name",firstname);
-                        intent.putExtra("Last name",lastname);
                         startActivity(intent);
                     }
                 }
