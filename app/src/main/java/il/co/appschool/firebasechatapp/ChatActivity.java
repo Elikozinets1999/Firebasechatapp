@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -30,6 +31,7 @@ public class ChatActivity extends AppCompatActivity {
     ListView chatList;
     ArrayList<ChatMessage> chatlist;
     ChatAdapter chatAdapter;
+    public SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,5 +78,15 @@ public class ChatActivity extends AppCompatActivity {
             startActivity(new Intent(ChatActivity.this, MainActivity.class));
         }
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sp=getApplicationContext().getSharedPreferences("settings",0);
+        String background = sp.getString("background", null);
+        if (background != null) {
+            getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
+        }
     }
 }

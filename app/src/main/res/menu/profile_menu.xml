@@ -9,6 +9,12 @@
         />
 
     <item
+        android:title="Settings"
+        app:showAsAction="never"
+        android:id="@+id/action_settings"
+        />
+
+    <item
         android:title="@string/menu_signout"
         android:icon="@drawable/logout"
         android:id="@+id/menu_signout"
