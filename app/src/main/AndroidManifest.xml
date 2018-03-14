@@ -32,6 +32,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".SaveFCMTokenService"/>
+
 
         <activity android:name=".ContactsActivity" />
         <activity android:name=".SetUPActivity" />

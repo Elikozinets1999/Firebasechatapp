@@ -16,8 +16,6 @@ public class ChatMessage {
     public ChatMessage(String messageText, String messageUser) {
         this.messageText = messageText;
         this.messageUser = messageUser;
-
-        // Initialize to current time
         messageTime = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E hh:mm a",Locale.getDefault());
         simpleDateFormat.format(messageTime);

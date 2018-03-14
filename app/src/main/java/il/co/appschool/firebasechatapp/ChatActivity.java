@@ -24,7 +24,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ChatActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -47,6 +50,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText input = findViewById(R.id.input);
+                String[] names = mAuth.getCurrentUser().getDisplayName().split(" ");
+                fname = names[1];
+                lname = names[2];
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
                     NotificationManager mNotificationManager =
                             (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -58,11 +64,8 @@ public class ChatActivity extends AppCompatActivity {
                     mChannel.enableVibration(false);
                     mNotificationManager.createNotificationChannel(mChannel);
                 }
-                String[] names = mAuth.getCurrentUser().getDisplayName().split(" ");
-                fname = names[1];
-                lname = names[2];
-                myNotificationManager.getInstance(ChatActivity.this).displayNotification(fname+" "+lname + " ("+FirebaseAuth.getInstance().getCurrentUser().getEmail()+")",input.getText().toString());
-                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname + " ("+FirebaseAuth.getInstance().getCurrentUser().getEmail()+")");
+                myNotificationManager.getInstance(ChatActivity.this).displayNotification(fname+" "+lname,input.getText().toString());
+                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
                 chatlist.add(chatMessage);
                 input.setText("");
                 chatAdapter.notifyDataSetChanged();
