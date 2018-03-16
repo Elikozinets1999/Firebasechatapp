@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-/**
- * Created by elili on 3/10/2018.
- */
+
 
 public class myNotificationManager {
     private Context mCtx;
@@ -27,13 +25,13 @@ public class myNotificationManager {
     public void displayNotification(String title, String body){
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(mCtx, Constants.CHANNEL_ID)
-                .setSmallIcon(R.drawable.fui_ic_phone_white_24dp)
+                .setSmallIcon(R.drawable.fui_ic_mail_white_24dp)
                 .setContentTitle(title)
                 .setContentText(body);
         Intent resultIntent = new Intent(mCtx, ChatActivity.class);
 
-        /*
-        *  Now we will create a pending intent
+
+       /* *  Now we will create a pending intent
         *  The method getActivity is taking 4 parameters
         *  All paramters are describing themselves
         *  0 is the request code (the second parameter)
@@ -43,8 +41,8 @@ public class myNotificationManager {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(mCtx, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        /*
-        *  Setting the pending intent to notification builder
+
+        /**  Setting the pending intent to notification builder
         * */
 
         mBuilder.setContentIntent(pendingIntent);

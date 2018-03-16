@@ -77,20 +77,23 @@ public class SaveFCMTokenService extends Service {
     }
 
     private void sendRegistrationToServer(final String token) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference fcmDatabaseRef = mDatabase.child("FCM_Device_Tokens").push();
-        FCM_Device_Tokens obj = new FCM_Device_Tokens();
-        obj.setToken(token);
-        fcmDatabaseRef.setValue(obj);
+        Log.d("TOKEN", "Sending token...");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.child("FCM_Device_Tokens");
+        FCM_Device_Tokens fcm_device_tokens = new FCM_Device_Tokens();
+        fcm_device_tokens.setToken(token);
+        myRef.setValue(token);
+        myRef.push();
         JSONObject jsonObject = new JSONObject();
-        String[] names = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ");
+//        String[] names = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ");
         try {
             jsonObject.put("token", token);
-            jsonObject.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-            jsonObject.put("username", names[0]);
+//            jsonObject.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+            /*jsonObject.put("username", names[0]);
             jsonObject.put("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
             jsonObject.put("firstname", names[1]);
-            jsonObject.put("lastname", names[2]);
+            jsonObject.put("lastname", names[2]);*/
             post("https://sleepy-springs-37359.herokuapp.com/fcm/regItem",jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();

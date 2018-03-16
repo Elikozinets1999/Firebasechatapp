@@ -6,7 +6,7 @@
         app:showAsAction="never"
         android:id="@+id/action_sign-out"
         android:icon="@drawable/logout"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         />
 
     <item
@@ -15,4 +15,13 @@
         app:showAsAction="never"
         android:orderInCategory="100"
         />
+
+    <item
+        android:id="@+id/action_Clear_Chat"
+        android:title="Clear chat"
+        app:showAsAction="never"
+        android:orderInCategory="200"
+        />
+
+
 </menu>

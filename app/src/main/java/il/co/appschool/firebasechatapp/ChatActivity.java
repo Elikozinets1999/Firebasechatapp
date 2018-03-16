@@ -95,19 +95,8 @@ public class ChatActivity extends AppCompatActivity {
                 String[] names = mAuth.getCurrentUser().getDisplayName().split(" ");
                 fname = names[1];
                 lname = names[2];
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                    NotificationManager mNotificationManager =
-                            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    int importance = NotificationManager.IMPORTANCE_HIGH;
-                    NotificationChannel mChannel = new NotificationChannel(Constants.CHANNEL_ID,Constants.CHANNEL_NAME, importance);
-                    mChannel.setDescription(Constants.CHANNEL_DESCRIPTION);
-                    mChannel.enableLights(true);
-                    mChannel.setLightColor(Color.RED);
-                    mChannel.enableVibration(false);
-                    mNotificationManager.createNotificationChannel(mChannel);
-                }
                 sendRequest(FirebaseInstanceId.getInstance().getToken(),input.getText().toString());
-                myNotificationManager.getInstance(ChatActivity.this).displayNotification(fname+" "+lname,input.getText().toString());
+//                myNotificationManager.getInstance(ChatActivity.this).displayNotification(fname+" "+lname,input.getText().toString());
                 ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
                 chatlist.add(chatMessage);
                 input.setText("");
@@ -132,6 +121,10 @@ public class ChatActivity extends AppCompatActivity {
             Intent intent_toprofile = new Intent(ChatActivity.this, ProfileActivity.class);
             startActivity(intent_toprofile);
 
+        }
+        if(item.getItemId() == R.id.action_Clear_Chat){
+            chatlist.clear();
+            chatAdapter.notifyDataSetChanged();
         }
         return true;
     }

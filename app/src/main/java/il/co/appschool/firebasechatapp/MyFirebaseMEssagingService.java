@@ -6,9 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -23,7 +26,7 @@ import org.greenrobot.eventbus.EventBus;
 
 public class MyFirebaseMEssagingService extends FirebaseMessagingService {
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(final RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         Log.d("Message", remoteMessage.getFrom());
         //if the message contains data payload
@@ -31,12 +34,18 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
         //we can read it easily
 
         if (remoteMessage.getData().size() > 0) {
-            Log.d("TOKEN","getData " + remoteMessage.getData().toString());
+            Log.d("TOKEN",remoteMessage.getData().toString());
    //         sendNodification(remoteMessage.getNotification().getBody());
+            boolean handler = new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    sendNodification(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle());
+                }
+            }, 5000);
         }
 
         if (remoteMessage.getNotification() != null) {
-            Log.d("TOKEN", "Get Notification "+remoteMessage.getNotification().getBody());
+            Log.d("TOKEN", remoteMessage.getNotification().getBody());
         }
     }
 
@@ -44,8 +53,8 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
         //then here we can use the title and body to build a notification
 
     private void sendNodification(String messagebody, String messagetitle) {
-        Log.d("TOKEN", "Sending Notification");
-        Intent intent = new Intent(this, ChatActivity.class);
+        Log.d("TOKEN", "Sending Notification...");
+        /*Intent intent = new Intent(this, ChatActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_ONE_SHOT);
@@ -54,7 +63,8 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
-                        .setContentTitle("FCM Mesage")
+                        .setContentTitle(messagetitle)
+                        .setSmallIcon(R.drawable.fui_ic_mail_white_24dp)
                         .setContentText(messagebody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
@@ -67,7 +77,7 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
                     NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
-        notificationManager.notify(0, notificationBuilder.build());
+        notificationManager.notify(0, notificationBuilder.build());*/
         myNotificationManager.getInstance(getApplicationContext()).displayNotification(messagetitle, messagebody);
     }
 }
