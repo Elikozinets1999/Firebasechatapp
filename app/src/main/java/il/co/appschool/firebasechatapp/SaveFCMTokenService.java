@@ -78,13 +78,9 @@ public class SaveFCMTokenService extends Service {
 
     private void sendRegistrationToServer(final String token) {
         Log.d("TOKEN", "Sending token...");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        myRef.child("FCM_Device_Tokens");
         FCM_Device_Tokens fcm_device_tokens = new FCM_Device_Tokens();
         fcm_device_tokens.setToken(token);
-        myRef.setValue(token);
-        myRef.push();
+        FirebaseDatabase.getInstance().getReference().push().child("token").setValue(fcm_device_tokens);
         JSONObject jsonObject = new JSONObject();
 //        String[] names = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ");
         try {

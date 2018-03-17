@@ -2,6 +2,7 @@ package il.co.appschool.firebasechatapp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -95,12 +96,11 @@ public class ChatActivity extends AppCompatActivity {
                 String[] names = mAuth.getCurrentUser().getDisplayName().split(" ");
                 fname = names[1];
                 lname = names[2];
-                sendRequest(FirebaseInstanceId.getInstance().getToken(),input.getText().toString());
-//                myNotificationManager.getInstance(ChatActivity.this).displayNotification(fname+" "+lname,input.getText().toString());
-                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
-                chatlist.add(chatMessage);
-                input.setText("");
-                chatAdapter.notifyDataSetChanged();
+                sendRequest(FirebaseInstanceId.getInstance().getToken(),input.getText().toString(), fname, lname);
+//                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
+//                chatlist.add(chatMessage);
+                  input.setText("");
+//                chatAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -139,11 +139,13 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    public void sendRequest (String token, String msg ){
+    public void sendRequest (String token, String msg, String fName, String lName ){
         JSONObject jsonObject = new JSONObject();
         if(msg.length() > 0){
             try {
                 jsonObject.put("token", token);
+                jsonObject.put("fName", fName);
+                jsonObject.put("lName", lName);
                 jsonObject.put("msg", msg);
                 post("https://sleepy-springs-37359.herokuapp.com/fcm/sendDemo",jsonObject.toString());
 

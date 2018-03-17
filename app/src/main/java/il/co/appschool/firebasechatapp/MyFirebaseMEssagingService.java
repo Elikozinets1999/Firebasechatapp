@@ -1,5 +1,6 @@
 package il.co.appschool.firebasechatapp;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,7 +12,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -25,6 +28,8 @@ import org.greenrobot.eventbus.EventBus;
  */
 
 public class MyFirebaseMEssagingService extends FirebaseMessagingService {
+
+
     @Override
     public void onMessageReceived(final RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -41,7 +46,7 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
                 public void run() {
                     sendNodification(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle());
                 }
-            }, 5000);
+            }, 1000);
         }
 
         if (remoteMessage.getNotification() != null) {
@@ -54,7 +59,7 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
 
     private void sendNodification(String messagebody, String messagetitle) {
         Log.d("TOKEN", "Sending Notification...");
-        /*Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, ChatActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_ONE_SHOT);
@@ -74,12 +79,24 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, "Channel title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(channel);
         }
-        notificationManager.notify(0, notificationBuilder.build());*/
-        myNotificationManager.getInstance(getApplicationContext()).displayNotification(messagetitle, messagebody);
+        notificationManager.notify(0, notificationBuilder.build());
+        Log.d("TOKEN", "Notification delivered");
+//        myNotificationManager.getInstance(getApplicationContext()).displayNotification(messagetitle, messagebody);
+//        updateList(messagetitle, messagebody);
+
     }
+
+    private void updateList(String title, String body){
+        Intent i = new Intent();
+        i.setAction("SendMessage");
+        i.putExtra("Message Title",title);
+        i.putExtra("Message body", body);
+        this.sendBroadcast(i);
+    }
+
 }
 
 
