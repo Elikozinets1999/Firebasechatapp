@@ -17,8 +17,47 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SetUPActivity extends AppCompatActivity {
+    public static final MediaType JSON =
+            MediaType.parse("application/json; charset=utf-8");
+    OkHttpClient client = new OkHttpClient();
+    void post(String url, String json) throws IOException {
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("ERROR", "Failed receiving data");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful())
+                    Log.d("TOKEN", "Data sent successfully");
+            }
+        });
+    }
+
+
     EditText etDisplayName, etFirstName, etLastName;
     Button btnSaveInfo;
     FirebaseAuth mAuth;
@@ -36,6 +75,7 @@ public class SetUPActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveUserInformation();
+                sendParameters();
                 etDisplayName.setText("");
                 etFirstName.setText("");
                 etLastName.setText("");
@@ -79,6 +119,27 @@ public class SetUPActivity extends AppCompatActivity {
                     }
                 }
             });
+        }
+    }
+
+    private void sendParameters(){
+        String displayName = etDisplayName.getText().toString();
+        String fName = etFirstName.getText().toString();
+        String lName = etLastName.getText().toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", FirebaseInstanceId.getInstance().getToken());
+            jsonObject.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+            jsonObject.put("username", displayName);
+            jsonObject.put("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            jsonObject.put("firstname", fName);
+            jsonObject.put("lastname", lName);
+            Log.d("TOKEN", jsonObject.toString());
+            post("https://sleepy-springs-37359.herokuapp.com/fcm/regItem",jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

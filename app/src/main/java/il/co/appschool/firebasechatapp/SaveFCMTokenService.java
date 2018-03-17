@@ -20,13 +20,6 @@ import java.security.Provider;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * Created by elili on 3/14/2018.
@@ -34,29 +27,6 @@ import okhttp3.Response;
 
 public class SaveFCMTokenService extends Service {
 
-    public static final MediaType JSON =
-            MediaType.parse("application/json; charset=utf-8");
-    OkHttpClient client = new OkHttpClient();
-     void post(String url, String json) throws IOException{
-         RequestBody requestBody = RequestBody.create(JSON, json);
-         final Request request = new Request.Builder()
-                 .url(url)
-                 .post(requestBody)
-                 .build();
-         Call call = client.newCall(request);
-         call.enqueue(new Callback() {
-             @Override
-             public void onFailure(Call call, IOException e) {
-                 Log.e("ERROR", "Failed receiving data");
-             }
-
-             @Override
-             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful())
-                    Log.d("TOKEN", "Data sent successfully");
-             }
-         });
-     }
 
     @Override
     public void onCreate() {
@@ -77,26 +47,9 @@ public class SaveFCMTokenService extends Service {
     }
 
     private void sendRegistrationToServer(final String token) {
-        Log.d("TOKEN", "Sending token...");
         FCM_Device_Tokens fcm_device_tokens = new FCM_Device_Tokens();
         fcm_device_tokens.setToken(token);
         FirebaseDatabase.getInstance().getReference().push().child("token").setValue(fcm_device_tokens);
-        JSONObject jsonObject = new JSONObject();
-//        String[] names = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ");
-        try {
-            jsonObject.put("token", token);
-//            jsonObject.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-            /*jsonObject.put("username", names[0]);
-            jsonObject.put("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            jsonObject.put("firstname", names[1]);
-            jsonObject.put("lastname", names[2]);*/
-            post("https://sleepy-springs-37359.herokuapp.com/fcm/regItem",jsonObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
