@@ -143,11 +143,13 @@ public class ChatActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
         if(msg.length() > 0){
             try {
-                jsonObject.put("token", token);
-                jsonObject.put("fName", fName);
-                jsonObject.put("lName", lName);
-                jsonObject.put("msg", msg);
-                post("https://sleepy-springs-37359.herokuapp.com/fcm/sendDemo",jsonObject.toString());
+                jsonObject.put("email", mAuth.getCurrentUser().getEmail());
+                jsonObject.put("firstname", fName);
+                jsonObject.put("lastname", lName);
+                jsonObject.put("body", msg);
+                Log.d("Message", mAuth.getCurrentUser().getEmail());
+                Log.d("Message", "Content sent "+msg);
+                post("https://sleepy-springs-37359.herokuapp.com/fcm/sendM",jsonObject.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();

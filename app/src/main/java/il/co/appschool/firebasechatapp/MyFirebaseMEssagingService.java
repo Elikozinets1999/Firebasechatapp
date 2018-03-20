@@ -33,7 +33,6 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(final RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.d("Message", remoteMessage.getFrom());
         //if the message contains data payload
         //It is a map of custom keyvalues
         //we can read it easily
