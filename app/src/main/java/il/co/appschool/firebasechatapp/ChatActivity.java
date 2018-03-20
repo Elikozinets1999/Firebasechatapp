@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
 
     OkHttpClient client = new OkHttpClient();
 
+    //Receives Message intent in order to insert object in list
     private BroadcastReceiver ll = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -163,13 +164,13 @@ public class ChatActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
         if(msg.length() > 0){
             try {
-                jsonObject.put("email", "xdd@xd.com");
+                jsonObject.put("email", mAuth.getCurrentUser().getEmail());
                 jsonObject.put("firstname", fName);
                 jsonObject.put("lastname", lName);
                 jsonObject.put("body", msg);
                 Log.d("Message", mAuth.getCurrentUser().getEmail());
                 Log.d("Message", "Content sent "+msg);
-                post("https://sleepy-springs-37359.herokuapp.com/fcm/sendM",jsonObject.toString());
+                post("https://sleepy-springs-37359.herokuapp.com/fcm/sendM", jsonObject.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();

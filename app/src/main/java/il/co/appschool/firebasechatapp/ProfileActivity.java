@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_gotoContacts)
-            startActivity(new Intent(ProfileActivity.this, ChatActivity.class));
+            startActivity(new Intent(ProfileActivity.this, ContactsActivity.class));
         else if (item.getItemId() == R.id.action_settings){
             startActivity(new Intent(ProfileActivity.this, Settings.class));
         }

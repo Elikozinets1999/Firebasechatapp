@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
             finish();
-            Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+            Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
             startActivity(intent);
         }
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         finish();
                         progressBar.setVisibility(View.INVISIBLE);
-                        Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                        Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         etLoginEmail.setText("");
                         etLoginPassword.setText("");
