@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -40,6 +41,12 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d("TOKEN",remoteMessage.getData().toString());
    //         sendNodification(remoteMessage.getNotification().getBody());
+            String title = remoteMessage.getNotification().getTitle();
+            String body = remoteMessage.getNotification().getBody();
+            Intent intent = new Intent("Update List");
+            intent.putExtra("title", title);
+            intent.putExtra("body", body);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             boolean handler = new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -87,15 +94,6 @@ public class MyFirebaseMEssagingService extends FirebaseMessagingService {
 //        updateList(messagetitle, messagebody);
 
     }
-
-    private void updateList(String title, String body){
-        Intent i = new Intent();
-        i.setAction("SendMessage");
-        i.putExtra("Message Title",title);
-        i.putExtra("Message body", body);
-        this.sendBroadcast(i);
-    }
-
 }
 
 

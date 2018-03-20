@@ -40,7 +40,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMessage> {
 
         tvSender.setText(String.valueOf(temp.getMessageUser()));
         tvBody.setText(String.valueOf(temp.getMessageText()));
-        tvTime.setText(String.valueOf(temp.getMessageTime()));
+        tvTime.setText(String.valueOf(temp.getFormattedMessageTime()));
 
         return view;
     }

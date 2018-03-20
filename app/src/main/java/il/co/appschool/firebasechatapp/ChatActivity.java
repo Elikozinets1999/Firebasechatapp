@@ -5,11 +5,13 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +53,20 @@ public class ChatActivity extends AppCompatActivity {
 
     OkHttpClient client = new OkHttpClient();
 
+    private BroadcastReceiver ll = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("Update List")){
+                String title = intent.getStringExtra("title");
+                String body = intent.getStringExtra("body");
+                ChatMessage chatMessage = new ChatMessage(body, title);
+                chatlist.add(chatMessage);
+
+                chatAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
     void post(String url, String json) throws IOException{
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -83,6 +99,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        Log.d("TOKEN", FirebaseInstanceId.getInstance().getToken());
         mAuth = FirebaseAuth.getInstance();
         chatList = findViewById(R.id.list_of_messages);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -97,10 +114,10 @@ public class ChatActivity extends AppCompatActivity {
                 fname = names[1];
                 lname = names[2];
                 sendRequest(FirebaseInstanceId.getInstance().getToken(),input.getText().toString(), fname, lname);
-//                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
-//                chatlist.add(chatMessage);
+                ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
+                chatlist.add(chatMessage);
                   input.setText("");
-//                chatAdapter.notifyDataSetChanged();
+                chatAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -137,13 +154,16 @@ public class ChatActivity extends AppCompatActivity {
         if (background != null) {
             getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
         }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("Update List");
+        LocalBroadcastManager.getInstance(this).registerReceiver(ll, intentFilter);
     }
 
     public void sendRequest (String token, String msg, String fName, String lName ){
         JSONObject jsonObject = new JSONObject();
         if(msg.length() > 0){
             try {
-                jsonObject.put("email", mAuth.getCurrentUser().getEmail());
+                jsonObject.put("email", "xdd@xd.com");
                 jsonObject.put("firstname", fName);
                 jsonObject.put("lastname", lName);
                 jsonObject.put("body", msg);

@@ -12,13 +12,14 @@ public class ChatMessage {
     private String messageText;
     private String messageUser;
     private Date messageTime;
+    private String formattedMessageTime;
 
     public ChatMessage(String messageText, String messageUser) {
         this.messageText = messageText;
         this.messageUser = messageUser;
         messageTime = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E hh:mm a",Locale.getDefault());
-        simpleDateFormat.format(messageTime);
+        formattedMessageTime = simpleDateFormat.format(messageTime);
     }
 
     public ChatMessage(){
@@ -43,5 +44,9 @@ public class ChatMessage {
 
     public Date getMessageTime() {
         return messageTime;
+    }
+
+    public String getFormattedMessageTime() {
+        return formattedMessageTime;
     }
 }
