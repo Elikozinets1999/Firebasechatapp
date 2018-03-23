@@ -17,12 +17,53 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity {
+    public static final MediaType JSON =
+            MediaType.parse("application/json; charset=utf-8");
+
+    OkHttpClient client = new OkHttpClient();
+
+    void post(String url, String json) throws IOException {
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Log.d("Message", "Message sent successfully");
+                }
+            }
+        });
+    }
+
+
+
     private EditText etLoginEmail, etLoginPassword;
     private Button btnLogin, btnGoToReg;
     FirebaseAuth mAuth;
@@ -40,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mAuth.getCurrentUser() != null)
+                    sendCredinals(FirebaseInstanceId.getInstance().getToken(), mAuth.getCurrentUser().getEmail());
                 startLogin();
             }
         });
@@ -50,6 +93,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
             }
         });
+    }
+
+    private void sendCredinals(String token, String email) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            String[] names = mAuth.getCurrentUser().getDisplayName().split(" ");
+            jsonObject.put("token", token);
+            jsonObject.put("email", email);
+            jsonObject.put("firstname", names[1]);
+            jsonObject.put("lastname", names[2]);
+            jsonObject.put("username", names[0]);
+            post("https://sleepy-springs-37359.herokuapp.com/fcm/logItem", jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -82,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
+                        sendCredinals(FirebaseInstanceId.getInstance().getToken(), FirebaseAuth.getInstance().getCurrentUser().getEmail());
                         finish();
                         progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(MainActivity.this, ContactsActivity.class);

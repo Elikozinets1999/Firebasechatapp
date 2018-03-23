@@ -1,20 +1,103 @@
 package il.co.appschool.firebasechatapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class ContactsActivity extends AppCompatActivity {
+
+    public static final MediaType JSON =
+            MediaType.parse("application/json; charset=utf-8");
+
+    OkHttpClient client = new OkHttpClient();
+
+    void post(String url, final String json) throws IOException {
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("Error", "No server response :(");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Gson gson = new Gson();
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String jsonInString = jsonObject.toString();
+                        final Contact contact = gson.fromJson(jsonInString, Contact.class);
+                        if(!contact.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    contactlist.add(contact);
+                                    contactsAdapter.notifyDataSetChanged();
+                                    Toast.makeText(ContactsActivity.this, "Contact added successfully", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(ContactsActivity.this, "You can't add yourself!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ContactsActivity.this, "Can't find requested email", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
     public SharedPreferences sp;
+    Dialog dialog;
     ListView contactsListView;
     ArrayList<Contact> contactlist;
     ContactsAdapter contactsAdapter;
@@ -25,7 +108,19 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
         contactsListView = findViewById(R.id.lvContacts);
         contactlist = new ArrayList<Contact>();
-        contactsAdapter = new ContactsAdapter(getApplicationContext(),0,0,contactlist);
+        contactsAdapter = new ContactsAdapter(ContactsActivity.this,0,0,contactlist);
+        contactsListView.setAdapter(contactsAdapter);
+        contactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ContactsActivity.this, ChatActivity.class);
+                String email = contactlist.get(position).getEmail().trim();
+                String fullname = contactlist.get(position).getFullName().trim();
+                intent.putExtra("destinationEmail", email);
+                intent.putExtra("contactFullName", fullname);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -47,7 +142,7 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_Add_Contact){
-            //
+            addContactDialog();
         }
         if(item.getItemId() == R.id.sign_out){
             FirebaseAuth.getInstance().signOut();
@@ -58,4 +153,44 @@ public class ContactsActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private void addContactDialog() {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.add_contact_dialog);
+        final EditText editText = dialog.findViewById(R.id.etDisplaySearch);
+        Button button = dialog.findViewById(R.id.btnAdd);
+        if(!editText.getText().toString().isEmpty())
+            button.setClickable(true);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isEmailValid(editText.getText().toString().trim())){
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("email", editText.getText().toString().trim());
+                        post("https://sleepy-springs-37359.herokuapp.com/fcm/searchItem", jsonObject.toString());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    dialog.dismiss();
+                } else {
+                    editText.setText("");
+                    editText.setError("Enter a valid email!");
+                    editText.requestFocus();
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    boolean isEmailValid(CharSequence charSequence){
+        return Patterns.EMAIL_ADDRESS.matcher(charSequence).matches();
+    }
+
+
 }

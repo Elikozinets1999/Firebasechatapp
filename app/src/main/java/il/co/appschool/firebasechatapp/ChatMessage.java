@@ -18,7 +18,7 @@ public class ChatMessage {
         this.messageText = messageText;
         this.messageUser = messageUser;
         messageTime = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E hh:mm a",Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E hh:mm a",Locale.ENGLISH);
         formattedMessageTime = simpleDateFormat.format(messageTime);
     }
 

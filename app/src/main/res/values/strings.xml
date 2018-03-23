@@ -15,6 +15,9 @@
     <string name="btnSave">Save information</string>
     <string name="profile_title">Profile</string>
     <string name="btnEdit">Edit Profile</string>
+    <string name="add_title">Add a New Contact</string>
+    <string name="Display_Name">Display name</string>
+    <string name="Search">Add</string>
 
     //Hints
     <string name="email_here">Enter E-mail</string>

@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -62,7 +63,6 @@ public class ChatActivity extends AppCompatActivity {
                 String body = intent.getStringExtra("body");
                 ChatMessage chatMessage = new ChatMessage(body, title);
                 chatlist.add(chatMessage);
-
                 chatAdapter.notifyDataSetChanged();
             }
         }
@@ -95,6 +95,7 @@ public class ChatActivity extends AppCompatActivity {
     ArrayList<ChatMessage> chatlist;
     ChatAdapter chatAdapter;
     String fname, lname;
+    TextView tvName;
     public SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,9 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         Log.d("TOKEN", FirebaseInstanceId.getInstance().getToken());
         mAuth = FirebaseAuth.getInstance();
+        tvName = findViewById(R.id.tvName);
+        final Intent intent = getIntent();
+        tvName.setText(intent.getStringExtra("contactFullName"));
         chatList = findViewById(R.id.list_of_messages);
         FloatingActionButton fab = findViewById(R.id.fab);
         chatlist = new ArrayList<ChatMessage>();
@@ -114,7 +118,7 @@ public class ChatActivity extends AppCompatActivity {
                 String[] names = mAuth.getCurrentUser().getDisplayName().split(" ");
                 fname = names[1];
                 lname = names[2];
-                sendRequest(FirebaseInstanceId.getInstance().getToken(),input.getText().toString(), fname, lname);
+                sendRequest(intent.getStringExtra("destinationEmail"),input.getText().toString(), fname, lname);
                 ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
                 chatlist.add(chatMessage);
                   input.setText("");
@@ -160,15 +164,15 @@ public class ChatActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(ll, intentFilter);
     }
 
-    public void sendRequest (String token, String msg, String fName, String lName ){
+    public void sendRequest (String email, String msg, String fName, String lName ){
         JSONObject jsonObject = new JSONObject();
         if(msg.length() > 0){
             try {
-                jsonObject.put("email", mAuth.getCurrentUser().getEmail());
+                jsonObject.put("email", email);
                 jsonObject.put("firstname", fName);
                 jsonObject.put("lastname", lName);
                 jsonObject.put("body", msg);
-                Log.d("Message", mAuth.getCurrentUser().getEmail());
+                Log.d("Message", email);
                 Log.d("Message", "Content sent "+msg);
                 post("https://sleepy-springs-37359.herokuapp.com/fcm/sendM", jsonObject.toString());
 
