@@ -92,6 +92,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean checkPassword(String password){
-        return password.length() >= 6;
+        return password.length() >= 6
+                && !password.equals(password.toLowerCase())
+                && !password.equals(password.toUpperCase())
+                && password.matches(".*\\d+.*");
     }
 }

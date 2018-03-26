@@ -170,6 +170,7 @@ public class ContactsActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("email", editText.getText().toString().trim());
+                        editText.setText("");
                         post("https://sleepy-springs-37359.herokuapp.com/fcm/searchItem", jsonObject.toString());
 
                     } catch (JSONException e) {

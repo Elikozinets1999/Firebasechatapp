@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="#fff"
-        android:background="#000"
+        android:background="@drawable/round_edit"
         android:textSize="25sp"
         android:textStyle="italic"
         android:maxLength="25"

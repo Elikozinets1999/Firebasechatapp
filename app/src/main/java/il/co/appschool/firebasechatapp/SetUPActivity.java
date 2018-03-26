@@ -23,6 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -102,11 +105,21 @@ public class SetUPActivity extends AppCompatActivity {
             etLastName.requestFocus();
             return;
         }
+        if(!checkNames(firstname, lastname)){
+            etFirstName.setText("");
+            etFirstName.setError("");
+            etLastName.setText("");
+            etLastName.setError("");
+            Toast.makeText(SetUPActivity.this, "Invalid names", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         FirebaseUser user = mAuth.getCurrentUser();
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MM:yyyy", Locale.ENGLISH);
         if(user != null){
             UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(displayname+" "+firstname+" "+lastname)
+                    .setDisplayName(displayname+" "+firstname+" "+lastname+" "+simpleDateFormat.format(date))
                     .build();
             Log.d("TAG", profileChangeRequest.getDisplayName());
             user.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -114,8 +127,7 @@ public class SetUPActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(getApplicationContext(), "Profile updated", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(SetUPActivity.this, ProfileActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(SetUPActivity.this, ProfileActivity.class));
                     }
                 }
             });
@@ -151,6 +163,10 @@ public class SetUPActivity extends AppCompatActivity {
         if (background != null) {
             getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
         }
+    }
+
+    boolean checkNames(String name, String lName ){
+        return name.length() >= 3 && lName.length() >= 3;
     }
 
 

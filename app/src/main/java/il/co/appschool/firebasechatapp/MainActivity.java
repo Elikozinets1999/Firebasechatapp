@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
-                    Log.d("Message", "Message sent successfully");
+                    Log.d("Message", "Credinals sent successfully");
+                } else {
+                    Log.e("Message","Error with credinals");
                 }
             }
         });
@@ -81,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mAuth.getCurrentUser() != null)
-                    sendCredinals(FirebaseInstanceId.getInstance().getToken(), mAuth.getCurrentUser().getEmail());
                 startLogin();
             }
         });
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             jsonObject.put("firstname", names[1]);
             jsonObject.put("lastname", names[2]);
             jsonObject.put("username", names[0]);
+            Log.d("Message", jsonObject.toString());
             post("https://sleepy-springs-37359.herokuapp.com/fcm/logItem", jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLogin() {
-        String email = etLoginEmail.getText().toString().trim();
+        final String email = etLoginEmail.getText().toString().trim();
         String password = etLoginPassword.getText().toString().trim();
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password))
             Toast.makeText(getApplicationContext(), "Enter all fields", Toast.LENGTH_LONG)
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        sendCredinals(FirebaseInstanceId.getInstance().getToken(), FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        sendCredinals(FirebaseInstanceId.getInstance().getToken(), email);
                         finish();
                         progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
