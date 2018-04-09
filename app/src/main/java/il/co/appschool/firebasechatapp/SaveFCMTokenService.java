@@ -49,7 +49,7 @@ public class SaveFCMTokenService extends Service {
     private void sendRegistrationToServer(final String token) {
         FCM_Device_Tokens fcm_device_tokens = new FCM_Device_Tokens();
         fcm_device_tokens.setToken(token);
-        FirebaseDatabase.getInstance().getReference().push().child("token").setValue(fcm_device_tokens);
+        FirebaseDatabase.getInstance().getReference().child(fcm_device_tokens.getToken()).setValue(fcm_device_tokens);
     }
 
     @Override

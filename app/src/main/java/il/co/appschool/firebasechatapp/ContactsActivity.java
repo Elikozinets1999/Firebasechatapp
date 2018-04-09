@@ -19,6 +19,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -26,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -68,6 +75,7 @@ public class ContactsActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     contactlist.add(contact);
+                                    FirebaseDatabase.getInstance().getReference().child(FirebaseInstanceId.getInstance().getToken()).child("Contact: "+ contact.getFullName()).setValue(contact);
                                     contactsAdapter.notifyDataSetChanged();
                                     Toast.makeText(ContactsActivity.this, "Contact added successfully", Toast.LENGTH_LONG).show();
                                 }
@@ -130,6 +138,50 @@ public class ContactsActivity extends AppCompatActivity {
         String background = sp.getString("background", null);
         if (background != null) {
             getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
+        }
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            ValueEventListener valueEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getEmail() != null && dataSnapshot.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getFullName() != null){
+                        for(DataSnapshot child : dataSnapshot.getChildren()){
+                            contactlist.add(new Contact(child.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getEmail(),  child.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getFullName()));
+                            contactsAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("TAG", databaseError.getMessage());
+                }
+            };
+            FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(valueEventListener);
+        }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+            ValueEventListener valueEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getEmail() != null && dataSnapshot.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getFullName() != null){
+                        for(DataSnapshot child : dataSnapshot.getChildren()){
+                            contactlist.add(new Contact(child.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getEmail(),  child.child(FirebaseInstanceId.getInstance().getToken()).getValue(Contact.class).getFullName()));
+                            contactsAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("TAG", databaseError.getMessage());
+                }
+            };
+            FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(valueEventListener);
         }
     }
 

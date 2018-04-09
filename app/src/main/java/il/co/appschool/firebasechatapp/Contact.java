@@ -13,6 +13,8 @@ public class Contact {
         this.fullName = fullName;
     }
 
+    public Contact() {}
+
     public String getEmail() {
         return email;
     }
