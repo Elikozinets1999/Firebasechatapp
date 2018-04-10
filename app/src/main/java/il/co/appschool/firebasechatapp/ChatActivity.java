@@ -121,8 +121,8 @@ public class ChatActivity extends AppCompatActivity {
                 sendRequest(intent.getStringExtra("destinationEmail"),input.getText().toString(), fname, lname);
                 ChatMessage chatMessage = new ChatMessage(input.getText().toString(),fname+" "+lname);
                 chatlist.add(chatMessage);
-                  input.setText("");
                 chatAdapter.notifyDataSetChanged();
+                input.setText("");
             }
         });
     }

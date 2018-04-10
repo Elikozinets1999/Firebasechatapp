@@ -139,7 +139,7 @@ public class ContactsActivity extends AppCompatActivity {
         if (background != null) {
             getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
         }
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,14 +157,14 @@ public class ContactsActivity extends AppCompatActivity {
                 }
             };
             FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(valueEventListener);
-        }
+        }*/
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -182,7 +182,7 @@ public class ContactsActivity extends AppCompatActivity {
                 }
             };
             FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(valueEventListener);
-        }
+        }*/
     }
 
     @Override
