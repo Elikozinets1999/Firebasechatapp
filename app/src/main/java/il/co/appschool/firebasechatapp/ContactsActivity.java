@@ -1,6 +1,8 @@
 package il.co.appschool.firebasechatapp;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -129,6 +131,26 @@ public class ContactsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        contactsListView.setLongClickable(true);
+        contactsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(ContactsActivity.this).setTitle("Contact removal").setMessage("Are you sure you want to remove this contact?").setCancelable(false).setPositiveButton("Yes I'm Sure!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,final int which) {
+                        contactlist.remove(position);
+                        contactsAdapter.notifyDataSetChanged();
+                        Toast.makeText(ContactsActivity.this, "Contact removed", Toast.LENGTH_LONG).show();
+                    }
+                }).setNegativeButton("No, I've changed my mind!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,final int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -164,6 +186,9 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            startActivity(new Intent(ContactsActivity.this, MainActivity.class));
+        }
         /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
@@ -244,6 +269,4 @@ public class ContactsActivity extends AppCompatActivity {
     boolean isEmailValid(CharSequence charSequence){
         return Patterns.EMAIL_ADDRESS.matcher(charSequence).matches();
     }
-
-
 }
