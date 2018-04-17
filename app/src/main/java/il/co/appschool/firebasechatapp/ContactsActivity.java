@@ -2,10 +2,12 @@ package il.co.appschool.firebasechatapp;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,8 +36,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,6 +52,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ContactsActivity extends AppCompatActivity {
+    private final String SHARED_PREFS_NAME = "MY_SHARED_PREF";
 
     public static final MediaType JSON =
             MediaType.parse("application/json; charset=utf-8");
@@ -154,12 +162,24 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         sp=getApplicationContext().getSharedPreferences("settings",0);
         String background = sp.getString("background", null);
         if (background != null) {
             getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
+        }
+        if(contactlist.size() != 0){
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+            Gson gson = new Gson();
+            String json = sharedPrefs.getString("list", null);
+            Type type = new TypeToken<ArrayList<Contact>>() {}.getType();
+            ArrayList<Contact> arrayList = gson.fromJson(json, type);
         }
         /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
@@ -188,6 +208,13 @@ public class ContactsActivity extends AppCompatActivity {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
             startActivity(new Intent(ContactsActivity.this, MainActivity.class));
+        }
+        if(contactlist.size() != 0){
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+            Gson gson = new Gson();
+            String json = sharedPrefs.getString("list", null);
+            Type type = new TypeToken<ArrayList<Contact>>() {}.getType();
+            ArrayList<Contact> arrayList = gson.fromJson(json, type);
         }
         /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
@@ -268,5 +295,18 @@ public class ContactsActivity extends AppCompatActivity {
 
     boolean isEmailValid(CharSequence charSequence){
         return Patterns.EMAIL_ADDRESS.matcher(charSequence).matches();
+    }
+
+    public <T> void setList(String key, List<T> list){
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        set(key, json);
+    }
+
+    private void set(String key, String json) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, json);
+        editor.commit();
     }
 }
