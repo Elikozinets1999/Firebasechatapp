@@ -84,7 +84,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:background="#000"
+        android:background="@drawable/round_btn"
         android:textColor="#fff"
         android:text="@string/btnSave"
         android:textSize="18sp"

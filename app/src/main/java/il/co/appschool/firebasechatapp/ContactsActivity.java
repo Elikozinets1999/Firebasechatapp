@@ -52,8 +52,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ContactsActivity extends AppCompatActivity {
-    private final String SHARED_PREFS_NAME = "MY_SHARED_PREF";
-
     public static final MediaType JSON =
             MediaType.parse("application/json; charset=utf-8");
 
@@ -174,13 +172,6 @@ public class ContactsActivity extends AppCompatActivity {
         if (background != null) {
             getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
         }
-        if(contactlist.size() != 0){
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-            Gson gson = new Gson();
-            String json = sharedPrefs.getString("list", null);
-            Type type = new TypeToken<ArrayList<Contact>>() {}.getType();
-            ArrayList<Contact> arrayList = gson.fromJson(json, type);
-        }
         /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
@@ -208,13 +199,6 @@ public class ContactsActivity extends AppCompatActivity {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
             startActivity(new Intent(ContactsActivity.this, MainActivity.class));
-        }
-        if(contactlist.size() != 0){
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-            Gson gson = new Gson();
-            String json = sharedPrefs.getString("list", null);
-            Type type = new TypeToken<ArrayList<Contact>>() {}.getType();
-            ArrayList<Contact> arrayList = gson.fromJson(json, type);
         }
         /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
@@ -295,18 +279,5 @@ public class ContactsActivity extends AppCompatActivity {
 
     boolean isEmailValid(CharSequence charSequence){
         return Patterns.EMAIL_ADDRESS.matcher(charSequence).matches();
-    }
-
-    public <T> void setList(String key, List<T> list){
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        set(key, json);
-    }
-
-    private void set(String key, String json) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, json);
-        editor.commit();
     }
 }

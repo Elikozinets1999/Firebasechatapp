@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Firebasechatapp.iml" filepath="$PROJECT_DIR$/Firebasechatapp.iml" />
+      <module fileurl="file://C:\Users\Amal\Desktop\Firebasechatapp\Firebasechatapp.iml" filepath="C:\Users\Amal\Desktop\Firebasechatapp\Firebasechatapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Amal\Desktop\Firebasechatapp\app\app.iml" filepath="C:\Users\Amal\Desktop\Firebasechatapp\app\app.iml" />
     </modules>
   </component>
 </project>
