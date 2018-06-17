@@ -103,7 +103,7 @@
             />
     </LinearLayout>
 
-    <Button
+    <!--<Button
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -114,6 +114,6 @@
         android:text="@string/btnEdit"
         android:textSize="20dp"
         android:textStyle="italic"
-        />
+        />-->
 
 </LinearLayout>

@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivity extends AppCompatActivity {
     TextView tvName, tvDisplay, tvTime;
-    Button btnEdit;
     FirebaseAuth mAuth;
     public SharedPreferences sp;
     @Override
@@ -26,21 +25,15 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         tvName = findViewById(R.id.tvFullName);
         tvDisplay = findViewById(R.id.tvDisplayName);
-        btnEdit = findViewById(R.id.btnEditProfile);
         tvTime = findViewById(R.id.tvTime);
         String[] name = mAuth.getCurrentUser().getDisplayName().split(" ");
         String Name = name[1]+" "+name[2];
         tvName.setText(Name);
         tvDisplay.setText(name[0]);
         tvTime.setText(name[3]);
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, SetUPActivity.class));
-            }
-        });
     }
 
+    // Creates the Options Menu.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.profile_menu, menu);

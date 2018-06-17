@@ -8,6 +8,7 @@ public class Contact {
     private String email;
     private String fullName;
 
+    //Builds a new contact
     public Contact(String email, String fullName) {
         this.email = email;
         this.fullName = fullName;
@@ -27,7 +28,7 @@ public class Contact {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    /*public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
@@ -37,5 +38,5 @@ public class Contact {
                 "email='" + email + '\'' +
                 ", fullName='" + fullName + '\'' +
                 '}';
-    }
+    }*/
 }

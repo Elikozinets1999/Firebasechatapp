@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             MediaType.parse("application/json; charset=utf-8");
 
     OkHttpClient client = new OkHttpClient();
-
+    // Sends Login perimeters to server DB once login has started.
     void post(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    // Calls for 'post' method to send given perimeters.
     private void sendCredinals(String token, String email) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
+    // Starts the login process once perimeters were given.
     private void startLogin() {
         final String email = etLoginEmail.getText().toString().trim();
         String password = etLoginPassword.getText().toString().trim();
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-
+    // Checks if the given password is valid. Returns True if the password's length is 6 or more characters.
     private boolean checkPass(String password){
         return password.length() >= 6;
     }

@@ -39,6 +39,7 @@ public class SetUPActivity extends AppCompatActivity {
     public static final MediaType JSON =
             MediaType.parse("application/json; charset=utf-8");
     OkHttpClient client = new OkHttpClient();
+    // Sends Set-up data to DB server.
     void post(String url, String json) throws IOException {
         RequestBody requestBody = RequestBody.create(JSON, json);
         final Request request = new Request.Builder()
@@ -85,7 +86,7 @@ public class SetUPActivity extends AppCompatActivity {
             }
         });
     }
-
+    // Saves user profile given to Firebase.
     private void saveUserInformation() {
         final String displayname = etDisplayName.getText().toString().trim();
         final String firstname = etFirstName.getText().toString().trim();
@@ -133,7 +134,7 @@ public class SetUPActivity extends AppCompatActivity {
             });
         }
     }
-
+    // Calls for sending data given to server DB.
     private void sendParameters(){
         String displayName = etDisplayName.getText().toString();
         String fName = etFirstName.getText().toString();
@@ -164,7 +165,7 @@ public class SetUPActivity extends AppCompatActivity {
             getWindow().getDecorView().findViewById(android.R.id.content).setBackgroundColor(Color.parseColor(background));
         }
     }
-
+    // Checks if conditions are answered for first name and last name.
     boolean checkNames(String name, String lName ){
         return name.length() >= 3 && lName.length() >= 3;
     }

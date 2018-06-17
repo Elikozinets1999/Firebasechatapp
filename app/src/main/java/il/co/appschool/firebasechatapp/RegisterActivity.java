@@ -1,6 +1,7 @@
 package il.co.appschool.firebasechatapp;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,9 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
+    // Starts the registration  process once the perimeters were given.
     private void startRegister() {
-        String email = etRegisterEmail.getText().toString().trim();
+        final String email = etRegisterEmail.getText().toString().trim();
         String password = etRegisterPassword.getText().toString().trim();
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(etConfirmPassword.getText().toString().trim()))
             Toast.makeText(getApplicationContext(), "Enter all fields", Toast.LENGTH_LONG)
@@ -86,11 +87,11 @@ public class RegisterActivity extends AppCompatActivity {
             });
         }
     }
-
+    // Checks if the password confirmation matches the password.
     private boolean confirmPassword(String pass1, String pass2){
         return pass1.equals(pass2);
     }
-
+    // Checks if the password answers the terms given.
     private boolean checkPassword(String password){
         return password.length() >= 6
                 && !password.equals(password.toLowerCase())

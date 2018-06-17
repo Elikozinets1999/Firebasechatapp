@@ -24,6 +24,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMessage> {
     Context context;
     List<ChatMessage> objects;
 
+    //Builds a new chat adapter.
     public ChatAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List<ChatMessage> objects) {
         super(context, resource, textViewResourceId, objects);
         this.context = context;
@@ -32,6 +33,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMessage> {
 
     @NonNull
     @Override
+    //Defines views of the adapter.
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = ((Activity)context).getLayoutInflater();
         @SuppressLint("ViewHolder") View view = layoutInflater.inflate(R.layout.message,parent,false);

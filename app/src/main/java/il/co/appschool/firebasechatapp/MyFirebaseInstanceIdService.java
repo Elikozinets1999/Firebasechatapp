@@ -12,8 +12,8 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
  */
 
 public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+ //   private SharedPreferences sharedPreferences;
+ //   private SharedPreferences.Editor editor;
 
     @Override
     public void onTokenRefresh() {

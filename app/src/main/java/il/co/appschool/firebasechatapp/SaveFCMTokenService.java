@@ -45,7 +45,7 @@ public class SaveFCMTokenService extends Service {
         }
         return super.onStartCommand(intent, flags, startId);
     }
-
+    // Sends token to Firebase DB.
     private void sendRegistrationToServer(final String token) {
         FCM_Device_Tokens fcm_device_tokens = new FCM_Device_Tokens();
         fcm_device_tokens.setToken(token);

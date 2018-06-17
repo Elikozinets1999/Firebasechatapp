@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         }
     };
-
+    // Tells in the background if the message was sent successfully.
     void post(String url, String json) throws IOException{
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -163,7 +163,7 @@ public class ChatActivity extends AppCompatActivity {
         intentFilter.addAction("Update List");
         LocalBroadcastManager.getInstance(this).registerReceiver(ll, intentFilter);
     }
-
+    // Sends a request to the server to send the message. Target is defined by email.
     public void sendRequest (String email, String msg, String fName, String lName ){
         JSONObject jsonObject = new JSONObject();
         if(msg.length() > 0){

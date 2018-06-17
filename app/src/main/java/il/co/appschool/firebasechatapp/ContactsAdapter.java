@@ -21,7 +21,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact>{
     Context context;
     List<Contact> objects;
 
-
+    //Creates a new Contacts adapter.
     public ContactsAdapter(@NonNull Context context, int resource, int textViewResourceId, @NonNull List<Contact> objects) {
         super(context, resource, textViewResourceId, objects);
         this.context = context;
@@ -30,6 +30,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact>{
 
     @NonNull
     @Override
+    //Defines the views of the adapter.
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = ((Activity)context).getLayoutInflater();
         @SuppressLint({"ViewHolder", "ResourceType"}) View view = layoutInflater.inflate(R.layout.contact, parent, false);

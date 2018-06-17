@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -52,11 +53,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ContactsActivity extends AppCompatActivity {
+
     public static final MediaType JSON =
             MediaType.parse("application/json; charset=utf-8");
 
     OkHttpClient client = new OkHttpClient();
-
+    // Adds a new contact if server confirms it exists.
     void post(String url, final String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -85,7 +87,6 @@ public class ContactsActivity extends AppCompatActivity {
                                     contactlist.add(contact);
                                     FirebaseDatabase.getInstance().getReference().child(FirebaseInstanceId.getInstance().getToken()).child("Contact: "+ contact.getFullName()).setValue(contact);
                                     contactsAdapter.notifyDataSetChanged();
-                                    Toast.makeText(ContactsActivity.this, "Contact added successfully", Toast.LENGTH_LONG).show();
                                 }
                             });
                         } else {
@@ -200,6 +201,7 @@ public class ContactsActivity extends AppCompatActivity {
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
             startActivity(new Intent(ContactsActivity.this, MainActivity.class));
         }
+
         /*if(FirebaseAuth.getInstance().getCurrentUser() != null){
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
@@ -241,7 +243,7 @@ public class ContactsActivity extends AppCompatActivity {
         }
         return true;
     }
-
+    //  Opens the dialog for adding a contact.
     private void addContactDialog() {
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -276,7 +278,7 @@ public class ContactsActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-
+    // Checks if the email is valid by pattern.
     boolean isEmailValid(CharSequence charSequence){
         return Patterns.EMAIL_ADDRESS.matcher(charSequence).matches();
     }
