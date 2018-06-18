@@ -51,7 +51,7 @@ public class MainShaked extends AppCompatActivity {
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) { //allows the user to access the wanted activity by clicking it's name
                 Intent intent;
                 switch (i) {
                     case 0:
@@ -109,12 +109,12 @@ public class MainShaked extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) { //creates the option menu to access the SQLite activity.
         getMenuInflater().inflate(R.menu.menu_main_shaked, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //allows the user to access the SQLite activity by clicking it.
         int id = item.getItemId();
         if (id == R.id.action_SQLite) {
             Intent intent = new Intent(this, BroadcastList.class);

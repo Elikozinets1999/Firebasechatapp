@@ -49,7 +49,7 @@ public class AirplaneMode extends AppCompatActivity {
 
         broadcastHelper = new BroadcastHelper(this);
     }
-    private class BroadCastAirplaneMode extends BroadcastReceiver
+    private class BroadCastAirplaneMode extends BroadcastReceiver // a list of commands followed by the state of the broadcast
     {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -77,6 +77,7 @@ public class AirplaneMode extends AppCompatActivity {
                 Log.d("data1", br.toString());
                 Log.d("data1", broadcasts.toString());
                 broadcastHelper.close();
+
             }
         }
     }
@@ -105,7 +106,7 @@ public class AirplaneMode extends AppCompatActivity {
         edit.commit();
         broadcastHelper.close();
     }
-    public void MakeNotification(Context context, String title, String ticker, String text)
+    public void MakeNotification(Context context, String title, String ticker, String text) // creates a notification, can be used in order to show a change detected by the broadcast
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent intent = new Intent(context, MainShaked.class);
@@ -128,12 +129,12 @@ public class AirplaneMode extends AppCompatActivity {
             notificationManager.notify(1, notification);
         }
     }
-    public void EndNotification()
+    public void EndNotification() //stops the notification service
     {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(1);
     }
-    public static boolean isAirplaneModeOn(Context context) {
+    public static boolean isAirplaneModeOn(Context context) { // checks the current state of the Airplane Mode
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             return Settings.System.getInt(context.getContentResolver(),
                     Settings.System.AIRPLANE_MODE_ON, 0) != 0;

@@ -16,7 +16,7 @@ import android.os.Build;
 
 public class NotificationHelper extends ContextWrapper {
 
-    private static final String SHAKED_CHANNEL_ID = "com.appschool.bagrutproject.Shaked.SHAKEDDEV";
+    private static final String SHAKED_CHANNEL_ID = "il.co.appschool.firebasechatapp.Shaked.SHAKEDDEV";
     private static final String SHAKED_CHANNEL_NAME = "SHAKEDDEV Channel";
     private NotificationManager manager;
     public NotificationHelper(Context base)
@@ -25,7 +25,7 @@ public class NotificationHelper extends ContextWrapper {
         createChannels();
     }
 
-    private void createChannels() {
+    private void createChannels() { //creates a channel for the notification
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel shakedChannel = new NotificationChannel(SHAKED_CHANNEL_ID,SHAKED_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
             shakedChannel.enableLights(true);
@@ -39,14 +39,14 @@ public class NotificationHelper extends ContextWrapper {
     }
 
 
-    public NotificationManager getManager() {
+    public NotificationManager getManager() { //returns the NotificationManager
         if(manager == null)
             manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         return manager;
     }
 
 
-    public Notification.Builder getSHAKEDChannelNotification(String title, String body, PendingIntent intent, long when, String ticker )
+    public Notification.Builder getSHAKEDChannelNotification(String title, String body, PendingIntent intent, long when, String ticker ) //returns the Notification Builder
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return new Notification.Builder(getApplicationContext(),SHAKED_CHANNEL_ID)

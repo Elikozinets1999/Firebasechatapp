@@ -51,12 +51,12 @@ public class BroadcastList extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) { //creates the option menu to access the Clear List button.
         getMenuInflater().inflate(R.menu.clear_option_brlistview, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //allows the user to clear the Broadcast List by clicking the clear button.
         int id = item.getItemId();
         if (id == R.id.action_clearList) {
             broadcastHelper.open();

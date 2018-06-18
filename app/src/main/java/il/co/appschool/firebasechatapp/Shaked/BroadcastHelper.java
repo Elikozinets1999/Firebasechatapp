@@ -51,36 +51,14 @@ public class BroadcastHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void open()
+    public void open() //opens the db
     {
         database=this.getWritableDatabase();
         Log.i("data", "Database connection open");
     }
 
-    public Broadcast createBroadcast1(Broadcast b)
-    {
-        //INSERT INTO table_name (column1, column2, column3, ...)
-        //VALUES (value1, value2, value3, ...);
-        long lastId = -1;
-        String str_sql = "INSERT INTO " + BroadcastHelper.TABLE_BROADCAST + "(" + BroadcastHelper.COLUMN_NAME + ","
-                + BroadcastHelper.COLUMN_DESCRIPTION + "," + BroadcastHelper.COLUMN_TIME + ")" + " VALUES (" +
-                "'" + b.getName() + "'" +  "," + "'" +  b.getDescription() + "'," + "'" + b.getTime() +"')";
 
-        database.execSQL(str_sql);
-
-        str_sql = "SELECT " + BroadcastHelper.COLUMN_ID +  " from " + BroadcastHelper.TABLE_BROADCAST +"  order by " + BroadcastHelper.COLUMN_ID + " DESC limit 1\n";
-
-        Cursor c = database.rawQuery(str_sql,null);
-        if (c != null && c.moveToFirst()) {
-            lastId = c.getLong(0); //The 0 is the column index, we only have 1 column, so the index is 0
-            Log.d("data1", ""+ lastId);
-        }
-
-        b.setBroadcastId(lastId);
-        return b;
-    }
-
-    public Broadcast createBroadcast2(Broadcast b)
+    public Broadcast createBroadcast2(Broadcast b) //creates a Broadcast
     {
         ContentValues values=new ContentValues();
         values.put(BroadcastHelper.COLUMN_NAME, b.getName());
@@ -92,7 +70,7 @@ public class BroadcastHelper extends SQLiteOpenHelper {
         b.setBroadcastId(insertId);
         return b;
     }
-    public ArrayList<Broadcast> getAllBroadcasts() {
+    public ArrayList<Broadcast> getAllBroadcasts() { //returns an ArrayList of the Broadcasts in the db.
 
         ArrayList<Broadcast> l = new ArrayList<Broadcast>();
         Cursor cursor=database.query(BroadcastHelper.TABLE_BROADCAST, allColumns, null, null, null, null, null);
@@ -112,7 +90,7 @@ public class BroadcastHelper extends SQLiteOpenHelper {
         return l;
     }
 
-    public long deleteAll()
+    public long deleteAll() //deletes all the Broadcasts in the db.
     {
         return database.delete(BroadcastHelper.TABLE_BROADCAST, null, null);
     }

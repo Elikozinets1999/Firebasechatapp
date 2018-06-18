@@ -42,7 +42,7 @@ public class USBConnected extends AppCompatActivity {
 
         broadcastHelper = new BroadcastHelper(this);
     }
-    private class BroadCastUSBConnected extends BroadcastReceiver
+    private class BroadCastUSBConnected extends BroadcastReceiver //using the broadcast's details, checks whether or not the device is connected to any kind of power and does certain things accordingly.
     {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -83,7 +83,7 @@ public class USBConnected extends AppCompatActivity {
         edit.commit();
         broadcastHelper.close();
     }
-    public void MakeNotification(Context context, String title, String ticker, String text)
+    public void MakeNotification(Context context, String title, String ticker, String text) // creates a notification, can be used in order to show a change detected by the broadcast
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent intent = new Intent(context, MainShaked.class);
@@ -106,7 +106,7 @@ public class USBConnected extends AppCompatActivity {
             notificationManager.notify(1, notification);
         }
     }
-    public void EndNotification()
+    public void EndNotification() //stops the notification service
     {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(1);

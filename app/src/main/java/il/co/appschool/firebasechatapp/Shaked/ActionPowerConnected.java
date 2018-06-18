@@ -44,7 +44,7 @@ public class ActionPowerConnected extends AppCompatActivity {
 
         broadcastHelper = new BroadcastHelper(this);
     }
-    private class BroadCastPowerConnected extends BroadcastReceiver
+    private class BroadCastPowerConnected extends BroadcastReceiver //a list of commands followed by the "TRUE" state of the broadcast
     {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -61,7 +61,7 @@ public class ActionPowerConnected extends AppCompatActivity {
         }
     }
 
-    private class BroadCastPowerDisconnected extends BroadcastReceiver
+    private class BroadCastPowerDisconnected extends BroadcastReceiver //a list of commands followed by the "FALSE" state of the broadcast
     {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -99,7 +99,7 @@ public class ActionPowerConnected extends AppCompatActivity {
         edit.commit();
         broadcastHelper.close();
     }
-    public void MakeNotification(Context context, String title, String ticker, String text)
+    public void MakeNotification(Context context, String title, String ticker, String text) // creates a notification, can be used in order to show a change detected by the broadcast
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent intent = new Intent(context, MainShaked.class);
@@ -122,7 +122,7 @@ public class ActionPowerConnected extends AppCompatActivity {
             notificationManager.notify(1, notification);
         }
     }
-    public void EndNotification()
+    public void EndNotification() //stops the notification service
     {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(1);

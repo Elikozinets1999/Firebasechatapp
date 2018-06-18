@@ -14,14 +14,14 @@ public class Broadcast extends ArrayList<Broadcast> {
     private String time;
     private long broadcastId;
 
-    public Broadcast(String name,String description, String time, long broadcastId) {
+    public Broadcast(String name,String description, String time, long broadcastId) { //builds a new Broadcast with a given id
         this.name = name;
         this.description = description;
         this.time = time;
         this.broadcastId = broadcastId;
 
     }
-    public Broadcast(String name,String description, String time) {
+    public Broadcast(String name,String description, String time) { //builds a new Broadcast starting with the id: 0
         this.name = name;
         this.description = description;
         this.time = time;

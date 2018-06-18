@@ -28,13 +28,13 @@ public class ActionShutDown extends AppCompatActivity {
         setContentView(R.layout.activity_action_shut_down);
 
         tv = (TextView)findViewById(R.id.tvDisplay);
-        tv.setText("FALSE");
+        tv.setText("FALSE"); //sets the text view to "FALSE" once the app opens.
 
         broadCastShutDown = new BroadCastShutDown();
 
         broadcastHelper = new BroadcastHelper(this);
     }
-    private class BroadCastShutDown extends BroadcastReceiver
+    private class BroadCastShutDown extends BroadcastReceiver //once the broadcast state changes to "TRUE", the function does certain things accordingly.
     {
         @Override
         public void onReceive(Context context, Intent intent) {

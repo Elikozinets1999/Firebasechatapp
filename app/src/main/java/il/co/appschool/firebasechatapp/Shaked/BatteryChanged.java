@@ -44,7 +44,7 @@ public class BatteryChanged extends AppCompatActivity {
         broadCastBattery = new BroadCastBattery();
     }
 
-    private class BroadCastBattery extends BroadcastReceiver {
+    private class BroadCastBattery extends BroadcastReceiver { //a use of the broadcast to find the current percentage battery left on the device and a few added commands as well.
         @Override
         public void onReceive(Context context, Intent intent) {
             int battery = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
@@ -82,7 +82,7 @@ public class BatteryChanged extends AppCompatActivity {
         broadcastHelper.close();
     }
 
-    public void MakeNotification(Context context, String title, String ticker, String text) {
+    public void MakeNotification(Context context, String title, String ticker, String text) { // creates a notification, can be used in order to show a change detected by the broadcast
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent intent = new Intent(context, MainShaked.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -104,7 +104,7 @@ public class BatteryChanged extends AppCompatActivity {
         }
     }
 
-    public void EndNotification() {
+    public void EndNotification() { //stops the notification service
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(1);
     }
