@@ -38,7 +38,7 @@
 
         <receiver android:name=".Shaked.ActionBootCompleted">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
@@ -56,7 +56,11 @@
         <activity android:name=".Shaked.BatteryOkay" />
         <activity android:name=".Shaked.USBConnected" />
         <activity android:name=".Shaked.BroadcastList" />
-        <activity android:name=".MainIlan"></activity>
+        <activity android:name=".MainIlan" />
+        <activity android:name=".Ilan.InsertActivity" />
+        <activity android:name=".Ilan.InsertActivityacc" />
+        <activity android:name=".Ilan.UpdateActivity" />
+        <activity android:name=".Ilan.UpdateActivityacc"></activity>
     </application>
 
 </manifest>
