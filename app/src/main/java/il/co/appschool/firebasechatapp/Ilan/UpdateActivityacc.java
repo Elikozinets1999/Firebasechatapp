@@ -34,7 +34,7 @@ public class UpdateActivityacc extends AppCompatActivity {
 
     }
 
-    public void init()
+    public void init()/// updating specific Message( by click ) with new parameters
     {
         fname=(EditText) findViewById(R.id.updteaccfname);
         Lname=(EditText) findViewById(R.id.updateacclname);

@@ -55,12 +55,14 @@ public class MessageOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void open() {
+    public void open()  /// opening the database
+    {
         database = this.getWritableDatabase();
         Log.i("Generalmsg", "Database connection open");
     }
 
-    public Message createMessage(Message c) {
+    public Message createMessage(Message c) /// creating new message
+    {
         ContentValues values = new ContentValues();
         values.put(MessageOpenHelper.COLUMN_MESSAGE, c.getMessage());
         values.put(MessageOpenHelper.COLUMN_SAVEDAY, c.getMsgSaveDay());
@@ -73,7 +75,8 @@ public class MessageOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<Message> getAllmessages() {
+    public ArrayList<Message> getAllmessages()///function that bring you in arraylist all the messages
+    {
 
         ArrayList<Message> l = new ArrayList<Message>();
         Cursor cursor = database.query(MessageOpenHelper.TABLE_MESSAGE, allColumns, null, null, null, null, null);
@@ -91,19 +94,19 @@ public class MessageOpenHelper extends SQLiteOpenHelper {
         }
         return l;
     }
-    public long deleteAllmsg()
+    public long deleteAllmsg() // deleting all messages
     {
         return database.delete(MessageOpenHelper.TABLE_MESSAGE, null, null);
     }
 
 
-    public long deletemessagebyRow(long rowId)
+    public long deletemessagebyRow(long rowId) /// deleting message by id
     {
         return database.delete(MessageOpenHelper.TABLE_MESSAGE, MessageOpenHelper.COLUMN_ID + "=" + rowId, null);
     }
 
 
-    public long updateByRowmsg(Message c)    /// i removed this command         values.put(MessageOpenHelper.COLUMN_ID, c.getCustormerId());
+    public long updateByRowmsg(Message c)/// updating specific message                        i removed this command   values.put(MessageOpenHelper.COLUMN_ID, c.getCustormerId());
     {
         ContentValues values=new ContentValues();
         values.put(MessageOpenHelper.COLUMN_SAVEDAY, c.getMsgSaveDay());
@@ -113,7 +116,7 @@ public class MessageOpenHelper extends SQLiteOpenHelper {
         return database.update(MessageOpenHelper.TABLE_MESSAGE, values, MessageOpenHelper.COLUMN_ID +"=" + c.getmessageId(), null);
     }
 
-    public Message getCustomerById(long rowId)
+    public Message getCustomerById(long rowId)/// getting message by specific id
     {
         Cursor cursor=database.query(MessageOpenHelper.TABLE_MESSAGE, allColumns, MessageOpenHelper.COLUMN_ID + "=" +rowId, null, null, null, null);
         cursor.moveToFirst();

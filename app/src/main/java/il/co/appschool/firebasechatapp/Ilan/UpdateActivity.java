@@ -32,7 +32,7 @@ public class UpdateActivity extends AppCompatActivity {
     }
 
 
-    public void init()
+    public void init() /// updating specific acc( by click) with new parameters
     {
         etmsgsaveday=(EditText) findViewById(R.id.updateEtmsgday);
         etmsgsavehour=(EditText) findViewById(R.id.updateEtmsghour);

@@ -12,7 +12,8 @@ public class Account {
     private String AccSpecId;
     private long id;
 
-    public Account( long id,String firstName, String lastName, String displayName, String email, String accSpecId) {
+    public Account( long id,String firstName, String lastName, String displayName, String email, String accSpecId)// building new account
+    {
         FirstName = firstName;
         LastName = lastName;
         DisplayName = displayName;
@@ -20,7 +21,7 @@ public class Account {
         AccSpecId = accSpecId;
         this.id = id;
     }
-    public Account(String firstName , String lastName , String displayName ,String email ,String accSpecId)
+    public Account(String firstName , String lastName , String displayName ,String email ,String accSpecId)// building new account
     {
         FirstName = firstName;
         LastName = lastName;

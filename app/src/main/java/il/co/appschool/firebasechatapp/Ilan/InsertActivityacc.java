@@ -31,7 +31,7 @@ public class InsertActivityacc extends AppCompatActivity {
 
     }
 
-    public void init()
+    public void init() /// we inserting new account to his database
     {
         fname=(EditText) findViewById(R.id.insertaccfname);
         Lname=(EditText) findViewById(R.id.insertacclname);

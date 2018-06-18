@@ -12,7 +12,7 @@ public class Message {
     private String fromWhichChat;                     //waste
 
     public Message(long messageId, String msgSaveDay, String msgSaveHour,
-                   String message, String fromWhichChat)
+                   String message, String fromWhichChat) /// building new sms
     {
         this.messageId = messageId;
         this.msgSaveDay = msgSaveDay;
@@ -20,7 +20,7 @@ public class Message {
         this.message = message;
         this.fromWhichChat = fromWhichChat;
     }
-    public Message(String msgSaveDay , String msgSaveHour , String message , String fromWhichChat)
+    public Message(String msgSaveDay , String msgSaveHour , String message , String fromWhichChat) /// building new sms
     {
         this.msgSaveDay = msgSaveDay;
         this.msgSaveHour = msgSaveHour;

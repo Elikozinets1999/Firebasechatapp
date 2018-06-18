@@ -75,7 +75,8 @@ public class AccountOpenHelper extends SQLiteOpenHelper {
 //        return c;
 //
 //    }
-    public Account createAccount(Account B) {
+    public Account createAccount(Account B)//creating a new aacount
+    {
         ContentValues values = new ContentValues();
         values.put(COLUMN_FIRSTNAME, B.getFirstName());
         values.put(COLUMN_LASTNAME, B.getLastName());
@@ -91,7 +92,8 @@ public class AccountOpenHelper extends SQLiteOpenHelper {
 
 
 
-    public ArrayList<Account> getAllAccounts() {
+    public ArrayList<Account> getAllAccounts() ///function that bring you in arraylist all the accounts
+    {
 
         ArrayList<Account> l = new ArrayList<Account>();
         Cursor cursor = database.query(AccountOpenHelper.TABLE_ACCOUNT, allColumns, null, null, null, null, null);
@@ -112,19 +114,19 @@ public class AccountOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    public long deleteAllacc()
+    public long deleteAllacc() ///delete all accounts
     {
         return database.delete(AccountOpenHelper.TABLE_ACCOUNT, null, null);
     }
 
 
-    public long deleteAccountByRow(long rowId)
+    public long deleteAccountByRow(long rowId)/// delete account by id
     {
         return database.delete(AccountOpenHelper.TABLE_ACCOUNT, AccountOpenHelper.COLUMN_ID + "=" + rowId, null);
     }
 
 
-    public long updateByRowacc(Account c)    /// i removed this command         values.put(CustomerOpenHelper.COLUMN_ID, c.getCustormerId());
+    public long updateByRowacc(Account c)/// updating specific acc                    i removed this command  values.put(CustomerOpenHelper.COLUMN_ID, c.getCustormerId());
     {
 
         ContentValues values=new ContentValues();
@@ -139,7 +141,7 @@ public class AccountOpenHelper extends SQLiteOpenHelper {
 
 
     }
-    public Account getAccountById(long rowId)
+    public Account getAccountById(long rowId) ///getting account by id
     {
         Cursor cursor=database.query(AccountOpenHelper.TABLE_ACCOUNT, allColumns, AccountOpenHelper.COLUMN_ID + "=" +rowId, null, null, null, null);
         cursor.moveToFirst();

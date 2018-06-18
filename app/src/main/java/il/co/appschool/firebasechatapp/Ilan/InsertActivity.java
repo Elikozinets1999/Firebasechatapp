@@ -31,7 +31,7 @@ public class InsertActivity extends AppCompatActivity {
 
     }
 
-    public void init()
+    public void init() /// we taking new sms and we inserting it to the database
     {
         msgsaveday=(EditText) findViewById(R.id.insertmsgsaveday);
         msgsavehour=(EditText) findViewById(R.id.insertmsgsavehour);
