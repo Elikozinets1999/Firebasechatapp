@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Ilan.InsertActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/inserttvId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insert new Message"
+        android:layout_gravity="center"
+        android:textSize="15sp"
+        android:layout_marginTop="90dp"
+        />
+    <EditText
+        android:id="@+id/insertmsgsaveday"
+        android:layout_marginTop="20dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="the day that the message was sent"/>
+
+
+    <EditText
+        android:id="@+id/insertmsgsavehour"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="The hour the message was sent"
+        />
+
+    <EditText
+        android:id="@+id/insertmessage"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="message"
+
+        />
+
+    <EditText
+        android:id="@+id/insertfromwho"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="from who "
+
+        />
+
+    <Button
+        android:id="@+id/insertBtnSave"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Save And Insert"
+        />
+
+
+</LinearLayout>

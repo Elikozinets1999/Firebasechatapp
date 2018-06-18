@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:id="@+id/iv"
+        android:layout_marginRight="10dp"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvaccFname"
+            android:text="first name:"
+            android:textSize="23sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvaccLname"
+            android:text="last name:"
+            android:textSize="23sp"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvaccDisplayname"
+            android:text="Display name"
+            android:textSize="23dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvEmail"
+            android:text="Email:"
+            android:textSize="23sp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:text="Special Id :"
+            android:id="@+id/tvSpecId"
+            />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

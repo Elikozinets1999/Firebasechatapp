@@ -1,9 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Ilan.UpdateActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update detaills of Message"
+        android:layout_gravity="center"
+        android:layout_marginTop="90dp"
+        android:id="@+id/updateId"
+        />
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateEtmsgday"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="Message sent day"
+        />
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateEtmsghour"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="Message sent hour"
+        />
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateEtmsg"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="what is the message"
+        />
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateEtfromwho"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="From who you got the message"
+        />
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:text="Delete"
+        android:id="@+id/updateBtnDelete"
+        />
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:text="save"
+        android:id="@+id/updateBtnSave"
+        />
+</LinearLayout>
