@@ -56,7 +56,7 @@
         <activity android:name=".Shaked.BatteryOkay" />
         <activity android:name=".Shaked.USBConnected" />
         <activity android:name=".Shaked.BroadcastList" />
-        <activity android:name=".Shaked.MainIlan"></activity>
+        <activity android:name=".MainIlan"></activity>
     </application>
 
 </manifest>
