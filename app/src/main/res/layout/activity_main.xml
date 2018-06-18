@@ -8,13 +8,45 @@
     tools:context="il.co.appschool.firebasechatapp.MainActivity"
     android:orientation="vertical"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        >
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:background="#000"
+        android:text="Shaked"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:layout_weight="1"
+        android:layout_marginRight="100dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/btn_Shaked"
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:background="@drawable/login"
-        android:layout_gravity="center"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="#000"
+        android:text="Ilan"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:id="@+id/btn_Ilan"
+        />
+    </LinearLayout>
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -87,6 +119,7 @@
         android:id="@+id/btnMoveToReg"
         android:textStyle="italic"
         />
+
 
     <ProgressBar
         android:id="@+id/LoginProgress"

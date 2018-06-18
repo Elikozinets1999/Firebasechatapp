@@ -1,9 +1,9 @@
 package il.co.appschool.firebasechatapp;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -21,11 +21,10 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.util.regex.Pattern;
 
+import il.co.appschool.firebasechatapp.Shaked.MainIlan;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -35,6 +34,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
+    Button BtnShaked, BtnIlan;
     public static final MediaType JSON =
             MediaType.parse("application/json; charset=utf-8");
 
@@ -74,6 +74,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BtnShaked = findViewById(R.id.btn_Shaked);
+        BtnIlan = findViewById(R.id.btn_Ilan);
+
+        BtnShaked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MainShaked.class);
+                startActivity(i);
+            }
+        });
+        BtnIlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MainIlan.class);
+                startActivity(i);
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
         etLoginEmail = findViewById(R.id.etLoginEmail);
         etLoginPassword = findViewById(R.id.etLoginPassword);

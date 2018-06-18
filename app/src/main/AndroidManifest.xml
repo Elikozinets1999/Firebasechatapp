@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -32,13 +34,29 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".SaveFCMTokenService"/>
+        <service android:name=".SaveFCMTokenService" />
 
+        <receiver android:name=".Shaked.ActionBootCompleted">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".ContactsActivity" />
         <activity android:name=".SetUPActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".Settings" />
+        <activity android:name=".MainShaked" />
+        <activity android:name=".Shaked.ActionPowerConnected" />
+        <activity android:name=".Shaked.ActionPowerDisconnected" />
+        <activity android:name=".Shaked.ActionShutDown" />
+        <activity android:name=".Shaked.AirplaneMode" />
+        <activity android:name=".Shaked.BatteryChanged" />
+        <activity android:name=".Shaked.BatteryLow" />
+        <activity android:name=".Shaked.BatteryOkay" />
+        <activity android:name=".Shaked.USBConnected" />
+        <activity android:name=".Shaked.BroadcastList" />
+        <activity android:name=".Shaked.MainIlan"></activity>
     </application>
 
 </manifest>
